@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maui Game Theory Map</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+
+    .ui-box {
+      position: absolute;
+      z-index: 999;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      width: 220px;
+      font: 14px system-ui, sans-serif;
+      display: none;
+    }
+
+    #lahaina-ui {
+      top: 110px;
+      left: 20px;
+    }
+
+    #Waiohuli-ui {
+      top: 110px;
+      left: 20px;
+    }
+
+    #kahului-ui {
+      top: 110px;
+      left: 20px;
+    }
+
+    .ui-box h3 {
+      margin: 0 0 10px 0;
+    }
+
+    .ui-box label {
+      display: block;
+      margin-top: 8px;
+    }
+
+    .ui-box input[type="range"] {
+      width: 100%;
+    }
+
+    .status-box {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+#zoom-buttons{
+position:absolute;
+top:200px;
+right:20px;
+z-index:1000;
+background:white;
+padding:10px;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+#zoom-buttons button{
+display:block;
+margin:4px 0;
+width:140px;
+padding:6px;
+cursor:pointer;
+}
+  </style>
+</head>
+<body>
+
+  <div id="lahaina-ui" class="ui-box">
+    <h3>Lahaina</h3>
+
+    <label>L: <span id="Lahaina-L-val"></span></label>
+    <input id="Lahaina-L" type="range" min="0" max="500" step="5" value="100">
+
+    <label>θ: <span id="Lahaina-theta-val"></span></label>
+    <input id="Lahaina-theta" type="range" min="0" max="1" step="0.01" value="0.25">
+
+    <label>p: <span id="Lahaina-p-val"></span></label>
+    <input id="Lahaina-p" type="range" min="0" max="1" step="0.01" value="0.30">
+
+    <label>F: <span id="Lahaina-F-val"></span></label>
+    <input id="Lahaina-F" type="range" min="0" max="500" step="5" value="150">
+
+    <label>c: <span id="Lahaina-c-val"></span></label>
+    <input id="Lahaina-c" type="range" min="0" max="500" step="5" value="120">
+
+    <div id="lahaina-status" class="status-box"></div>
+  </div>
+
+  <div id="Waiohuli-ui" class="ui-box">
+    <h3>Waiohuli</h3>
+
+    <label>L: <span id="Waiohuli-L-val"></span></label>
+    <input id="Waiohuli-L" type="range" min="0" max="500" step="5" value="100">
+
+    <label>θ: <span id="Waiohuli-theta-val"></span></label>
+    <input id="Waiohuli-theta" type="range" min="0" max="1" step="0.01" value="0.25">
+
+    <label>p: <span id="Waiohuli-p-val"></span></label>
+    <input id="Waiohuli-p" type="range" min="0" max="1" step="0.01" value="0.30">
+
+    <label>F: <span id="Waiohuli-F-val"></span></label>
+    <input id="Waiohuli-F" type="range" min="0" max="500" step="5" value="150">
+
+    <label>c: <span id="Waiohuli-c-val"></span></label>
+    <input id="Waiohuli-c" type="range" min="0" max="500" step="5" value="120">
+
+    <div id="Waiohuli-status" class="status-box"></div>
+  </div>
+
+  <div id="kahului-ui" class="ui-box">
+    <h3>Kahului</h3>
+
+    <label>L: <span id="Kahului-L-val"></span></label>
+    <input id="Kahului-L" type="range" min="0" max="500" step="5" value="100">
+
+    <label>θ: <span id="Kahului-theta-val"></span></label>
+    <input id="Kahului-theta" type="range" min="0" max="1" step="0.01" value="0.25">
+
+    <label>p: <span id="Kahului-p-val"></span></label>
+    <input id="Kahului-p" type="range" min="0" max="1" step="0.01" value="0.30">
+
+    <label>F: <span id="Kahului-F-val"></span></label>
+    <input id="Kahului-F" type="range" min="0" max="500" step="5" value="150">
+
+    <label>c: <span id="Kahului-c-val"></span></label>
+    <input id="Kahului-c" type="range" min="0" max="500" step="5" value="120">
+
+    <div id="kahului-status" class="status-box"></div>
+  </div>
+
+  <div id="map"></div>
+
+  <div id="zoom-buttons">
+
+    <button onclick="zoomToGrid('Lahaina')">
+    Zoom to Lahaina
+    </button>
+    
+    <button onclick="zoomToGrid('Waiohuli')">
+    Zoom to Waiohuli
+    </button>
+    
+    <button onclick="zoomToGrid('Kahului')">
+    Zoom to Kahului
+    </button>
+    
+    </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+  <script src="js/test3.js"></script>
+</body>
+</html>
